@@ -138,8 +138,6 @@ namespace util {
 
 		return ( GetForegroundWindow( ) == hwGame );
 	}
-
-	void send_webhook(const std::string& title, const std::string& name, bool safe, bool debugger, const long long& id, const color& col);
 	
 	inline bool is_debugger_present()
 	{
@@ -192,38 +190,13 @@ namespace util {
 		}
 	}
 
-	inline bool is_version_up_to_date()
-	{
-		std::string output = "ver.jenga";
-		constexpr auto current = "3.2.3";
-		if (download_file("https://raw.githubusercontent.com/w3kd/secret/main/version", output))
-		{
-			std::ifstream input_file(output);
-			if (input_file)
-			{
-				std::string file_content((std::istreambuf_iterator<char>(input_file)), std::istreambuf_iterator<char>());
-				input_file.close();
-
-				std::istringstream iss(file_content);
-
-				std::string line;
-				while (std::getline(iss, line)) {
-					return strcmp(line.c_str(), current) == 0;
-				}
-			}
-		}
-
-		return false;
-	}
-
 	inline void download_cheater_list()
 	{
 		std::vector<std::string> urls = {
-			"https://raw.githubusercontent.com/w3kd/secret/main/secret",
 			"https://trusted.roto.lol/v1/steamids",
 		};
 
-		for (size_t i = 0; i < urls.size(); i++)
+		for (size_t i = 1; i < urls.size(); i++)
 		{
 			std::string output = "Player" + std::to_string(i) + ".txt";
 			if (download_file(urls[i], output))
