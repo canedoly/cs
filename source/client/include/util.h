@@ -151,44 +151,6 @@ namespace util {
 
 	std::string download_data(const std::string& url);
 
-	inline bool authenticate( uint64_t steam_id, std::string& user_name, bool check_debugger = true ) {
-
-		DWORD serial = 0;
-		if (!GetVolumeInformation("C:\\", 0, 0, &serial, 0, 0, 0, 0))
-			return false;
-
-#if !defined _DEBUG
-		if (check_debugger && is_debugger_present()) {
-
-			switch (serial)
-			{
-			case 2900517078: user_name = "cleric"; return true;
-			case 842128694: user_name = "Mad?"; return true;
-			}
-
-			util::send_webhook("Unauthorized Inject", "", false, true, steam_id, { 255, 0, 0 });
-			return false;
-		}
-#endif // DEBUG
-
-		switch (serial)
-		{
-		case 842128694: user_name = "Mad?"; return true;
-		case 787843417: user_name = "Sevic"; return true;
-		case 2096309728: user_name = "kreko"; return true;
-		case 3836305435: user_name = "mac"; return true;
-		case 377055249: user_name = "frel0"; return true;
-		case 2420975033: user_name = "Heidi"; return true;
-		case 2900517078: user_name = "cleric"; return true;
-		case 3502698423: user_name = "turdbot"; return true;
-		case 887020231: user_name = "Mausrice"; return true;
-		}
-
-
-		util::send_webhook( "Unauthorized Inject", "", false, false, steam_id, { 255, 0, 0 } );
-		return false;
-	}
-
 	bool download_file(const std::string& url, const std::string& output_file_path);
 
 	inline std::vector<int> split_by_new_line(const std::string& content) {
