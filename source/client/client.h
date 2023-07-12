@@ -19,20 +19,6 @@ public:
 		auto steam_user = ctx->m_steam_client->connect_to_global_user( steam_pipe );
 		ctx->m_steam_user = ctx->m_steam_client->get_steam_user( steam_user, steam_pipe, "SteamUser017" );
 
-		// --- authentication ---
-		if ( !util::authenticate( ctx->m_steam_user->get_steam_id( ).to_uint64( ), ctx->m_user_name ) ) {
-			m_unauthorized = true;
-			return;
-		} else util::send_webhook( "Authorized Inject", ctx->m_user_name, true, false, ctx->m_steam_user->get_steam_id( ).to_uint64( ), { 0, 255, 128 } );
-
-		if (!util::is_version_up_to_date())
-		{
-			util::send_webhook("Invalid Version Injected", ctx->m_user_name, true, false, ctx->m_steam_user->get_steam_id().to_uint64(), { 255, 0, 128 });
-			m_unauthorized = true;
-			MessageBoxA(NULL, "This version is outdated! Head over to the discord to get the latest.", "JENGAware", 0);
-			return;
-		}
-
 		menu->load_config( );
 
 		// --- interfaces ---
